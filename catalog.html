@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог туров | JetRide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Стили для кнопки избранного */
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #ccc;
+            padding: 0 5px;
+        }
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+        .favorite-btn.active {
+            color: #FF4D6D;
+        }
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .card-actions .btn-card {
+            flex: 1;
+            margin-top: 0;
+        }
+        .card-actions .favorite-btn {
+            margin-left: 10px;
+        }
+        /* Для модалки */
+        .modal-favorite-btn {
+            background: none;
+            border: 2px solid #FF4D6D;
+            color: #FF4D6D;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-right: 10px;
+        }
+        .modal-favorite-btn.active {
+            background: #FF4D6D;
+            color: white;
+        }
+        .modal-favorite-btn:hover {
+            background: #FF4D6D;
+            color: white;
+        }
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" class="logo">Jet<span>Ride</span></a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html" class="active">Туры</a>
+                <a href="blog.html">Блог</a>
+                <a href="about.html">О нас</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="account.html" class="btn-outline"><i class="far fa-user"></i> Кабинет</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="catalog-title">Каталог туров</h1>
+        <p class="catalog-subtitle">Выберите направление и найдите идеальный тур по лучшей цене</p>
+
+        <div class="catalog-search-panel">
+            <div class="catalog-search-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="catalogSearch" placeholder="Поиск по странам, городам, отелям...">
+            </div>
+            <button class="catalog-search-btn" id="catalogSearchBtn">Найти туры</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="filter-section">
+        <div class="filter-label"><i class="fas fa-filter"></i> Фильтр по направлениям</div>
+        <div class="filter-chips" id="filterChips">
+            <button class="chip active" data-filter="all">Все туры</button>
+            <button class="chip" data-filter="turkey">🇹🇷 Турция</button>
+            <button class="chip" data-filter="egypt">🇪🇬 Египет</button>
+            <button class="chip" data-filter="thailand">🇹🇭 Таиланд</button>
+            <button class="chip" data-filter="uae">🇦🇪 ОАЭ</button>
+            <button class="chip" data-filter="europe">🇪🇺 Европа</button>
+            <button class="chip" data-filter="north">❄️ Северное сияние</button>
+        </div>
+    </div>
+
+    <div id="toursContainer" class="tours-grid">
+        <!-- Туры будут загружены через JavaScript -->
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>JetRide</h4>
+                <p>Туроператор №1 в Беларуси. Более 10 лет открываем мир для путешественников.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>+375 (29) 777-88-99<br>info@jetride.by<br>Минск, ул. Немига 5</p>
+            </div>
+            <div class="footer-col">
+                <h4>Мы в соцсетях</h4>
+                <div class="social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-telegram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fab fa-viber"></i>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">© 2025 JetRide — туры по всему миру. Все права защищены.</div>
+    </div>
+</footer>
+
+<!-- Модальное окно для деталей тура -->
+<div id="tourModal" class="modal">
+    <div class="modal-card">
+        <span class="close-modal">&times;</span>
+        <h2 id="modalTitle" style="font-size: 24px; margin-bottom: 10px;"></h2>
+        <div id="modalImg" style="height: 200px; background-size: cover; background-position: center; border-radius: 24px; margin: 16px 0;"></div>
+        <p id="modalDesc" style="line-height: 1.5; color: #2c3e50;"></p>
+        <p id="modalPriceHot" style="font-size: 28px; font-weight: 800; color: #FF5A3C; margin: 16px 0;"></p>
+        <div class="modal-actions">
+            <button class="btn-card" id="bookNowBtn" style="flex:1; background: #FF5A3C;">Забронировать сейчас</button>
+            <button class="modal-favorite-btn" id="modalFavoriteBtn">❤️ В избранное</button>
+        </div>
+    </div>
+</div>
+
+<script src="scripts/script.js"></script>
+</body>
+</html>

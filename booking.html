@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование тура | JetRide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .booking-wrapper { display: flex; flex-wrap: wrap; gap: 50px; margin: 30px 0 60px; }
+        .booking-details { flex: 1; min-width: 300px; }
+        .booking-details .tour-preview { background: white; border-radius: 28px; padding: 25px; border: 1px solid #eef2f0; }
+        .booking-details .tour-preview img { width: 100%; height: 200px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
+        .booking-form { flex: 1; min-width: 350px; background: white; border-radius: 28px; padding: 30px; border: 1px solid #eef2f0; }
+        .booking-form h2 { margin-bottom: 25px; }
+        .form-row { display: flex; gap: 20px; flex-wrap: wrap; }
+        .form-row .form-group { flex: 1; min-width: 200px; }
+        .total-price { font-size: 28px; font-weight: 800; color: #FF5A3C; margin: 20px 0; }
+        .payment-section { margin-top: 25px; border-top: 1px solid #eef2f0; padding-top: 25px; }
+        .payment-progress { display: none; margin: 20px 0; }
+        .progress-bar { width: 100%; height: 8px; background: #eef2f0; border-radius: 10px; overflow: hidden; }
+        .progress-bar .fill { height: 100%; width: 0%; background: #4caf50; transition: width 0.5s ease; }
+        .payment-status { text-align: center; font-weight: 600; margin-top: 10px; color: #2c3e50; }
+        .success-message { display: none; background: #e8f5e9; color: #2e7d32; padding: 15px 20px; border-radius: 40px; text-align: center; margin-top: 20px; }
+        .btn-pay { background: #FF5A3C; border: none; padding: 14px 40px; border-radius: 50px; color: white; font-weight: 700; font-size: 18px; cursor: pointer; transition: 0.2s; width: 100%; }
+        .btn-pay:hover { background: #e04a2e; }
+        .btn-pay:disabled { opacity: 0.6; cursor: not-allowed; }
+        .back-link { display: inline-block; margin-top: 20px; color: #FF5A3C; text-decoration: none; }
+        .error-message { color: #e1502c; font-size: 13px; margin-top: 5px; display: none; }
+        .form-group .error-message { margin-top: 0; }
+        @media (max-width: 780px) { .booking-wrapper { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" class="logo">Jet<span>Ride</span></a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Туры</a>
+                <a href="blog.html">Блог</a>
+                <a href="about.html">О нас</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="account.html" class="btn-outline"><i class="far fa-user"></i> Кабинет</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Хлебные крошки -->
+<div class="breadcrumbs">
+    <div class="container">
+        <a href="index.html">Главная</a>
+        <span class="separator">/</span>
+        <a href="catalog.html">Туры</a>
+        <span class="separator">/</span>
+        <span class="current">Бронирование</span>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="page-title" style="margin-bottom: 10px;">Оформление бронирования</h1>
+    <p style="color: #5f6c7a; margin-bottom: 20px;">Заполните данные и завершите оплату, чтобы забронировать тур</p>
+
+    <div class="booking-wrapper" id="bookingWrapper">
+        <div class="booking-details">
+            <div class="tour-preview" id="tourPreview">
+                <!-- Заполняется из скрипта -->
+            </div>
+        </div>
+
+        <div class="booking-form" id="bookingForm">
+            <h2>Ваши данные</h2>
+            <form id="bookingFormFields" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Имя и фамилия</label>
+                        <input type="text" id="customerName" placeholder="Иван Иванов" required>
+                        <div class="error-message" id="nameError">Пожалуйста, введите имя и фамилию.</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="customerEmail" placeholder="ivan@example.com" required>
+                        <div class="error-message" id="emailError">Введите корректный email.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="customerPhone" placeholder="+375 (29) 123-45-67" required>
+                    <div class="error-message" id="phoneError">Введите номер телефона.</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Дата заезда</label>
+                        <input type="date" id="checkinDate" required>
+                        <div class="error-message" id="dateError">Выберите дату заезда (не ранее чем через 7 дней).</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Количество человек</label>
+                        <input type="number" id="guests" value="2" min="1" max="10" required>
+                        <div class="error-message" id="guestsError">Количество человек от 1 до 10.</div>
+                    </div>
+                </div>
+
+                <div class="total-price" id="totalPrice">Итого: 0 BYN</div>
+
+                <div class="payment-section">
+                    <button type="button" class="btn-pay" id="payBtn">Оплатить сейчас</button>
+                    <div class="payment-progress" id="paymentProgress">
+                        <div class="progress-bar">
+                            <div class="fill" id="progressFill"></div>
+                        </div>
+                        <div class="payment-status" id="paymentStatus">Обработка платежа...</div>
+                    </div>
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle" style="font-size: 24px;"></i> Бронирование успешно оформлено!
+                    </div>
+                </div>
+            </form>
+            <a href="catalog.html" class="back-link"><i class="fas fa-arrow-left"></i> Вернуться к каталогу</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>JetRide</h4><p>Туроператор №1 в Беларуси. Более 10 лет открываем мир для путешественников.</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>+375 (29) 777-88-99<br>info@jetride.by<br>Минск, ул. Немига 5</p></div>
+            <div class="footer-col"><h4>Мы в соцсетях</h4><div class="social"><i class="fab fa-instagram"></i><i class="fab fa-telegram"></i><i class="fab fa-whatsapp"></i></div></div>
+        </div>
+        <div class="copyright">© 2025 JetRide — туры по всему миру. Все права защищены.</div>
+    </div>
+</footer>
+
+<script src="scripts/script.js"></script>
+<script src="scripts/booking.js"></script>
+</body>
+</html>

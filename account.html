@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | JetRide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .account-wrapper { display: flex; flex-wrap: wrap; gap: 40px; margin: 30px 0 60px; }
+        .account-sidebar { flex: 0 0 280px; background: white; border-radius: 28px; padding: 30px 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); border: 1px solid #eef2f0; align-self: flex-start; }
+        .account-avatar { text-align: center; margin-bottom: 25px; }
+        .account-avatar img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #FF5A3C; padding: 3px; }
+        .account-name { font-size: 22px; font-weight: 700; margin-top: 10px; }
+        .account-email { font-size: 14px; color: #5f6c7a; }
+        .account-menu { list-style: none; padding: 0; margin-top: 25px; }
+        .account-menu li { margin-bottom: 8px; }
+        .account-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 40px; color: #2c3e50; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .account-menu a:hover { background: #f7f9fc; }
+        .account-menu a.active { background: #FF5A3C; color: white; }
+        .account-menu a i { width: 20px; text-align: center; }
+        .account-content { flex: 1; min-width: 300px; }
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+        .tab-pane.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .booking-card { background: white; border-radius: 20px; padding: 20px; border: 1px solid #eef2f0; margin-bottom: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+        .booking-info h4 { margin-bottom: 6px; }
+        .booking-info p { color: #5f6c7a; font-size: 14px; margin: 3px 0; }
+        .booking-status { background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 40px; font-size: 13px; font-weight: 600; }
+        .booking-status.cancelled { background: #ffebee; color: #c62828; }
+        .btn-cancel { background: transparent; border: 1px solid #e1502c; color: #e1502c; padding: 6px 16px; border-radius: 40px; cursor: pointer; font-weight: 500; transition: 0.2s; }
+        .btn-cancel:hover { background: #e1502c; color: white; }
+        .favorite-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .favorite-item { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #eef2f0; transition: 0.2s; }
+        .favorite-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .favorite-img { height: 140px; background-size: cover; background-position: center; }
+        .favorite-body { padding: 14px 16px 18px; }
+        .favorite-body h5 { margin-bottom: 6px; }
+        .favorite-body .price { font-weight: 700; color: #FF5A3C; }
+        .btn-remove { background: none; border: none; color: #e1502c; cursor: pointer; font-size: 14px; margin-top: 8px; }
+        .profile-form .form-group { margin-bottom: 18px; }
+        .profile-form label { display: block; font-weight: 500; margin-bottom: 5px; }
+        .profile-form input { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 40px; font-size: 16px; outline: none; }
+        .profile-form input:focus { border-color: #FF5A3C; }
+        .logout-btn { background: transparent; border: 2px solid #e1502c; color: #e1502c; padding: 10px 28px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 20px; }
+        .logout-btn:hover { background: #e1502c; color: white; }
+        .empty-state { text-align: center; padding: 40px; color: #5f6c7a; }
+        @media (max-width: 780px) { .account-sidebar { flex: 1 1 100%; } }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" class="logo">Jet<span>Ride</span></a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Туры</a>
+                <a href="blog.html">Блог</a>
+                <a href="about.html">О нас</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="account.html" class="active"><i class="far fa-user"></i> Кабинет</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Хлебные крошки -->
+<div class="breadcrumbs">
+    <div class="container">
+        <a href="index.html">Главная</a>
+        <span class="separator">/</span>
+        <span class="current">Личный кабинет</span>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="page-title" style="margin-bottom: 10px;">Личный кабинет</h1>
+    <p style="color: #5f6c7a; margin-bottom: 20px;">Управляйте своими бронированиями, избранным и настройками</p>
+
+    <div class="account-wrapper">
+        <aside class="account-sidebar">
+            <div class="account-avatar">
+                <img src="https://ui-avatars.com/api/?name=Алексей+Иванов&size=120&background=FF5A3C&color=fff&font-size=0.5" alt="Аватар">
+                <div class="account-name" id="profileName">Алексей Иванов</div>
+                <div class="account-email" id="profileEmail">alex@jetride.by</div>
+            </div>
+            <ul class="account-menu">
+                <li><a href="#" class="active" data-tab="bookings"><i class="fas fa-ticket-alt"></i> Мои бронирования</a></li>
+                <li><a href="#" data-tab="favorites"><i class="fas fa-heart"></i> Избранное</a></li>
+                <li><a href="#" data-tab="settings"><i class="fas fa-cog"></i> Настройки</a></li>
+            </ul>
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+        </aside>
+
+        <div class="account-content">
+            <!-- Вкладка: Мои бронирования -->
+            <div id="bookings" class="tab-pane active">
+                <h3 style="margin-bottom: 20px;">Ваши бронирования</h3>
+                <div id="bookingsList"></div>
+            </div>
+
+            <!-- Вкладка: Избранное -->
+            <div id="favorites" class="tab-pane">
+                <h3 style="margin-bottom: 20px;">Сохранённые туры</h3>
+                <div id="favoritesList" class="favorite-grid"></div>
+            </div>
+
+            <!-- Вкладка: Настройки -->
+            <div id="settings" class="tab-pane">
+                <h3 style="margin-bottom: 20px;">Редактировать профиль</h3>
+                <form class="profile-form" id="profileForm">
+                    <div class="form-group">
+                        <label for="fullName">Имя и фамилия</label>
+                        <input type="text" id="fullName" value="Алексей Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" value="alex@jetride.by" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">Телефон</label>
+                        <input type="tel" id="userPhone" value="+375 (29) 777-88-99">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">Новый пароль (оставьте пустым, если не хотите менять)</label>
+                        <input type="password" id="userPassword" placeholder="Введите новый пароль">
+                    </div>
+                    <button type="submit" class="submit-btn" style="background: #FF5A3C;">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>JetRide</h4><p>Туроператор №1 в Беларуси. Более 10 лет открываем мир для путешественников.</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>+375 (29) 777-88-99<br>info@jetride.by<br>Минск, ул. Немига 5</p></div>
+            <div class="footer-col"><h4>Мы в соцсетях</h4><div class="social"><i class="fab fa-instagram"></i><i class="fab fa-telegram"></i><i class="fab fa-whatsapp"></i></div></div>
+        </div>
+        <div class="copyright">© 2025 JetRide — туры по всему миру. Все права защищены.</div>
+    </div>
+</footer>
+
+<script src="scripts/script.js"></script>
+<script>
+    // ====== ЛИЧНЫЙ КАБИНЕТ ======
+
+    // Переключение вкладок
+    const menuLinks = document.querySelectorAll('.account-menu a');
+    const tabPanes = {
+        bookings: document.getElementById('bookings'),
+        favorites: document.getElementById('favorites'),
+        settings: document.getElementById('settings')
+    };
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            menuLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            Object.values(tabPanes).forEach(pane => pane.classList.remove('active'));
+            const tab = this.dataset.tab;
+            if (tabPanes[tab]) {
+                tabPanes[tab].classList.add('active');
+                if (tab === 'bookings') renderBookings();
+                if (tab === 'favorites') renderFavorites();
+            }
+        });
+    });
+
+    // Загрузка данных профиля из localStorage (если есть)
+    function loadProfile() {
+        const profile = JSON.parse(localStorage.getItem('jetride_profile'));
+        if (profile) {
+            document.getElementById('profileName').textContent = profile.name;
+            document.getElementById('profileEmail').textContent = profile.email;
+            document.getElementById('fullName').value = profile.name;
+            document.getElementById('userEmail').value = profile.email;
+            document.getElementById('userPhone').value = profile.phone || '';
+        } else {
+            // Если профиля нет, устанавливаем значения по умолчанию (можно оставить пустыми)
+            document.getElementById('fullName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('userPhone').value = '';
+        }
+    }
+    loadProfile();
+
+    // Сохранение профиля
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const phone = document.getElementById('userPhone').value.trim();
+        if (!name || !email) {
+            alert('Имя и Email обязательны для заполнения.');
+            return;
+        }
+        const profile = { name, email, phone };
+        localStorage.setItem('jetride_profile', JSON.stringify(profile));
+        loadProfile();
+        alert('Данные профиля успешно обновлены!');
+    });
+
+    // Рендер бронирований
+    function renderBookings() {
+        const container = document.getElementById('bookingsList');
+        const bookings = getBookings();
+        if (bookings.length === 0) {
+            container.innerHTML = `<div class="empty-state">У вас пока нет бронирований. <a href="catalog.html" style="color: #FF5A3C;">Перейти в каталог</a></div>`;
+            return;
+        }
+        container.innerHTML = bookings.map(b => `
+            <div class="booking-card" data-id="${b.id}">
+                <div class="booking-info">
+                    <h4>${b.tourName}</h4>
+                    <p><i class="far fa-calendar-alt"></i> ${b.checkinDate} — ${b.nights} ночей</p>
+                    <p><i class="fas fa-users"></i> ${b.guests} чел.</p>
+                    <p><i class="fas fa-map-pin"></i> ${b.country}, ${b.location}</p>
+                </div>
+                <div>
+                    <span class="booking-status">${b.status}</span>
+                    <div style="margin-top: 8px; font-weight: 700; color: #FF5A3C;">${b.totalPrice} BYN</div>
+                    <button class="btn-cancel" data-id="${b.id}" style="margin-top: 8px;">Отменить</button>
+                </div>
+            </div>
+        `).join('');
+
+        // Обработчики отмены
+        document.querySelectorAll('.btn-cancel').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.dataset.id);
+                if (confirm('Вы уверены, что хотите отменить бронирование?')) {
+                    cancelBooking(id);
+                    renderBookings();
+                }
+            });
+        });
+    }
+
+    // Рендер избранного
+    function renderFavorites() {
+        const container = document.getElementById('favoritesList');
+        const favorites = getFavorites();
+        if (favorites.length === 0) {
+            container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">У вас пока нет избранных туров. <a href="catalog.html" style="color: #FF5A3C;">Перейти в каталог</a></div>`;
+            return;
+        }
+        // Показываем туры из массива tours (глобальный из script.js)
+        const favTours = tours.filter(t => favorites.includes(t.id));
+        if (favTours.length === 0) {
+            container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Нет сохранённых туров.</div>`;
+            return;
+        }
+        container.innerHTML = favTours.map(t => `
+            <div class="favorite-item" data-id="${t.id}">
+                <div class="favorite-img" style="background-image: url('${t.img}');"></div>
+                <div class="favorite-body">
+                    <h5>${t.name}</h5>
+                    <p style="color: #5f6c7a; font-size: 13px;">${t.location}, ${t.nights} ночей</p>
+                    <div class="price">${t.price} BYN</div>
+                    <button class="btn-remove" data-id="${t.id}"><i class="fas fa-trash-alt"></i> Удалить</button>
+                </div>
+            </div>
+        `).join('');
+
+        document.querySelectorAll('.btn-remove').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.dataset.id);
+                if (confirm('Удалить этот тур из избранного?')) {
+                    toggleFavorite(id);
+                    renderFavorites();
+                }
+            });
+        });
+    }
+
+    // Кнопка выхода
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        if (confirm('Вы уверены, что хотите выйти?')) {
+            alert('Вы вышли из системы. (Демо-режим)');
+            window.location.href = 'index.html';
+        }
+    });
+
+    // Инициализация: рендерим бронирования и избранное при загрузке
+    renderBookings();
+    renderFavorites();
+</script>
+</body>
+</html>

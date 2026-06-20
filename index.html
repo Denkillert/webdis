@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JetRide | Туры по всему миру</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" class="logo">Jet<span>Ride</span></a>
+            <div class="nav-links">
+				<a href="index.html" class="active">Главная</a>
+				<a href="catalog.html">Туры</a>
+				<a href="blog.html">Блог</a>
+				<a href="about.html">О нас</a>
+				<a href="contacts.html">Контакты</a>
+				<a href="account.html" class="btn-outline"><i class="far fa-user"></i> Кабинет</a>
+			</div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-slider" id="heroSlider">
+        <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+            <div class="container hero-content">
+                <h1>Путешествия, которые вдохновляют</h1>
+                <p>Горящие туры, эксклюзивные направления, лучшие цены. Откройте мир с JetRide.</p>
+                <a href="catalog.html" class="btn-primary">Найти тур →</a>
+            </div>
+        </div>
+        <!-- Новый слайд про Северное сияние (вместо Мальдив) -->
+        <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/361104/pexels-photo-361104.jpeg?auto=compress&cs=tinysrgb&w=1600 ');">
+            <div class="container hero-content">
+                <h1>Северное сияние и фьорды</h1>
+                <p>Норвегия, Исландия, Мурманск — незабываемые приключения на краю света. Уникальные туры на Север.</p>
+                <a href="catalog.html?q=север" class="btn-primary">Исследовать Север →</a>
+            </div>
+        </div>
+        <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+            <div class="container hero-content">
+                <h1>Азия и экзотика</h1>
+                <p>Таиланд, Вьетнам, Индия — откройте яркие эмоции на любой бюджет.</p>
+                <a href="catalog.html" class="btn-primary">Забронировать</a>
+            </div>
+        </div>
+		 <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=1600);">
+            <div class="container hero-content">
+                <h1>Египет, Турция, Мальдивы</h1>
+                <p>Лучшие предложения с вылетом из Минска. Рассрочка, страховка, трансфер.</p>
+                <a href="catalog.html" class="btn-primary">Выбрать тур →</a>
+            </div>
+		 </div>
+	</div>
+</section>
+
+<div class="container">
+    <div class="search-panel">
+        <div class="search-group"><i class="fas fa-plane-departure"></i><input type="text" id="searchInput" placeholder="Куда хотите поехать? (Страна, курорт)"></div>
+        <div class="search-group"><i class="fas fa-calendar-alt"></i><input type="text" placeholder="Даты туда-обратно" value="17 мая – 24 мая"></div>
+        <div class="search-group"><i class="fas fa-users"></i><select><option>2 взрослых</option><option>1 взрослый</option><option>3 взрослых</option><option>2+1 ребенок</option></select></div>
+        <button class="search-btn" id="homeSearchBtn"><i class="fas fa-search"></i> Найти туры</button>
+    </div>
+</div>
+
+<div class="container features">
+    <div class="features-grid">
+        <div class="feature-item"><div class="feature-icon"><i class="fas fa-gem"></i></div><h3>Лучшая цена</h3><p>Гарантия низкой стоимости — мы мониторим все системы бронирования.</p></div>
+        <div class="feature-item"><div class="feature-icon"><i class="fas fa-headset"></i></div><h3>24/7 поддержка</h3><p>Русскоязычная помощь на всех этапах путешествия.</p></div>
+        <div class="feature-item"><div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div><h3>100+ направлений</h3><p>Более 50 стран, включая экзотические туры.</p></div>
+        <div class="feature-item"><div class="feature-icon"><i class="fas fa-lock"></i></div><h3>Безопасно</h3><p>Договор оферты и возврат средств по гарантии.</p></div>
+    </div>
+</div>
+
+<div class="container" style="text-align: center; margin: 40px 0 60px;">
+    <h2 style="font-size: 32px; margin-bottom: 20px;">Готовы отправиться в путешествие?</h2>
+    <p style="font-size: 18px; margin-bottom: 30px; color: #4a5b6e;">Более 1500 туров по всему миру. Выберите свой идеальный отдых.</p>
+    <a href="catalog.html" class="btn-secondary">Смотреть все туры →</a>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>JetRide</h4><p>Туроператор №1 в Беларуси. Более 10 лет открываем мир для путешественников.</p></div>
+            <div class="footer-col"><h4>Контакты</h4><p>+375 (29) 777-88-99<br>info@jetride.by<br>Минск, ул. Немига 5</p></div>
+            <div class="footer-col"><h4>Мы в соцсетях</h4><div class="social"><i class="fab fa-instagram"></i><i class="fab fa-telegram"></i><i class="fab fa-whatsapp"></i></div></div>
+        </div>
+        <div class="copyright">© 2025 JetRide — туры по всему миру. Все права защищены.</div>
+    </div>
+</footer>
+
+<script>
+    // Слайдер героя
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const sliderContainer = document.getElementById('heroSlider');
+    if (sliderContainer && slides.length) {
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            sliderContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }, 5000);
+    }
+
+    // Перенаправление на каталог с поисковым запросом
+    const searchBtn = document.getElementById('homeSearchBtn');
+    const searchInput = document.getElementById('searchInput');
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `catalog.html?q=${encodeURIComponent(query)}`;
+            } else {
+                window.location.href = 'catalog.html';
+            }
+        });
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `catalog.html?q=${encodeURIComponent(query)}`;
+                } else {
+                    window.location.href = 'catalog.html';
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
